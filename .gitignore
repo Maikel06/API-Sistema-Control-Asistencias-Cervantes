@@ -1,0 +1,10 @@
+
+*.vsidx
+*.dll
+Sistema Control de Asistencia Cervantes/.vs/Sistema Control de Asistencia Cervantes/v17/.suo
+*.pdb
+*.dll
+*.cache
+Sistema Control de Asistencia Cervantes/obj/Debug/net6.0/Sistema Control de Asistencia Cervantes.csproj.FileListAbsolute.txt
+*.pdb
+Sistema Control de Asistencia Cervantes/obj/staticwebassets.pack.sentinel
