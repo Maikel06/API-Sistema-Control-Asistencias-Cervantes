@@ -5,8 +5,8 @@
         public int Id { get; set; }
         public int Numero { get; set; }
         public string Dia { get; set; } = null!;
-        public TimeOnly Hora { get; set; }
-        public string NombreMateria { get; set; } = null!;
+        public TimeOnly hora { get; set; }
+        public string nombreMateria { get; set; } = null!;
 
     }
 }
