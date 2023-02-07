@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "O+oiqDbOjFY+VA0CSqn9hUkQHyJUah1fnmoUYXDrW5o1BTs/K60/MFMELVkMrY4GRpxrjsRSFrmFRwTCmJ2hhg==",
+  "dgSpecHash": "tFh4WrNbdSl8doxGAcX+5DScCcB+tX8hls62e2b/eMQk5rCYlzhOuNf5NZom5dyqkLUJ3ScYBG0PgCE0WrZ6sw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\Sistema Control de Asistencia Cervantes\\Sistema Control de Asistencia Cervantes.csproj",
+  "projectFilePath": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\API-Sistema-Control-Asistencias-Cervantes\\Sistema Control de Asistencia Cervantes\\Sistema Control de Asistencia Cervantes.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\villa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\villa\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

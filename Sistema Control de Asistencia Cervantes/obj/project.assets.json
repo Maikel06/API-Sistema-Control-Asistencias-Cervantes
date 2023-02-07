@@ -10625,11 +10625,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\Sistema Control de Asistencia Cervantes\\Sistema Control de Asistencia Cervantes.csproj",
+      "projectUniqueName": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\API-Sistema-Control-Asistencias-Cervantes\\Sistema Control de Asistencia Cervantes\\Sistema Control de Asistencia Cervantes.csproj",
       "projectName": "Sistema Control de Asistencia Cervantes",
-      "projectPath": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\Sistema Control de Asistencia Cervantes\\Sistema Control de Asistencia Cervantes.csproj",
+      "projectPath": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\API-Sistema-Control-Asistencias-Cervantes\\Sistema Control de Asistencia Cervantes\\Sistema Control de Asistencia Cervantes.csproj",
       "packagesPath": "C:\\Users\\villa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\Sistema Control de Asistencia Cervantes\\obj\\",
+      "outputPath": "C:\\Users\\villa\\OneDrive\\Escritorio\\TCU\\SISTEMA CERVANTES\\Software\\API-Sistema-Control-Asistencias-Cervantes\\Sistema Control de Asistencia Cervantes\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
