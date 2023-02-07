@@ -14,6 +14,6 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Alumno> Alumno { get; set; }
-       
+        public DbSet<Encargado> Encargado { get; set; };
     }
 }
