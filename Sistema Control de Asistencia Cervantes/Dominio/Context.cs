@@ -12,7 +12,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
         {
         }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
        
     }
