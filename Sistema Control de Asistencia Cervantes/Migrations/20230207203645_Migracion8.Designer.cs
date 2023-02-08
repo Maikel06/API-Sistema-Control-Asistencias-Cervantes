@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sistema_Control_de_Asistencia_Cervantes.Dominio;
@@ -11,9 +12,11 @@ using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 namespace SistemaControldeAsistenciaCervantes.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230207203645_Migracion8")]
+    partial class Migracion8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,6 +74,10 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
                     b.Property<TimeOnly>("Hora")
                         .HasColumnType("time without time zone");
+
+                    b.Property<string>("NombreMateria")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Numero")
                         .HasColumnType("integer");

@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MessagePack;
+using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 
 namespace API_Lab.Models
 {
     public partial class Usuario
     {
+        public Usuario()
+        {
+            Usuario_Imparte_Cursos = new HashSet<Usuario_Imparte_Curso>();
+        }
+
+        
         public int Id { get; set; }
         public string Nombre { get; set; } = null!;
         public string Apellido { get; set; } = null!;
         public string Contraseña { get; set; } = null!;
         public Boolean Rol { get; set; }
         public string NombreUsuario { get; set; } = null!;
+
+        public ICollection<Usuario_Imparte_Curso> Usuario_Imparte_Cursos { get; set; } = null!;
 
     }
 }
