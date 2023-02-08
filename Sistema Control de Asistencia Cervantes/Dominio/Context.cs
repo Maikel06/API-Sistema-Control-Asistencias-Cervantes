@@ -13,8 +13,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
         }
 
         public DbSet<Usuario> Usuario { get; set; }
+
         public DbSet<Alumno> Alumno { get; set; }
-        public DbSet<Encargado> Encargado { get; set; };
+
+        public DbSet<Encargado> Encargado { get; set; }
 
         public DbSet<Curso> Curso { get; set; }
 
@@ -24,6 +26,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //USUARIO IMPARTE CURSO
             modelBuilder.Entity<Usuario_Imparte_Curso>()
                 .HasKey(uc => new { uc.UsuarioId, uc.CursoId });
 
@@ -37,10 +40,27 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
                 .WithMany(c => c.Usuario_Imparte_Cursos)
                 .HasForeignKey(uc => uc.CursoId);
 
+            //BLOQUE HORARIO
             modelBuilder.Entity<BloqueHorario>()
                 .HasOne(b => b.Curso)
                 .WithMany(c => c.BloquesHorario)
                 .HasForeignKey(b => b.CursoId);
+
+            //ALUMNO ASISTE BLOQUEHORARIO
+            modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
+                .HasKey(ab => new { ab.AlumnoId, ab.BloqueHorarioId });
+
+            modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
+                .HasOne(ab => ab.Alumno)
+                .WithMany(a => a.Alumno_Asiste_BloqueHorarios)
+                .HasForeignKey(ab => ab.AlumnoId);
+
+            modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
+                .HasOne(ab => ab.BloqueHorario)
+                .WithMany(b => b.Alumno_Asiste_BloqueHorarios)
+                .HasForeignKey(ab => ab.BloqueHorarioId);
+
+            //
         }
 
     }
