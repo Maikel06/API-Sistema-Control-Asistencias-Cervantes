@@ -8,3 +8,7 @@ Sistema Control de Asistencia Cervantes/.vs/Sistema Control de Asistencia Cervan
 Sistema Control de Asistencia Cervantes/obj/Debug/net6.0/Sistema Control de Asistencia Cervantes.csproj.FileListAbsolute.txt
 *.pdb
 Sistema Control de Asistencia Cervantes/obj/staticwebassets.pack.sentinel
+*.editorconfig
+*.json
+*.json
+*.props
