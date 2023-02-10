@@ -11,48 +11,47 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CursosController : ControllerBase
+    public class AlumnosController : ControllerBase
     {
         private readonly Context _context;
 
-        public CursosController(Context context)
+        public AlumnosController(Context context)
         {
             _context = context;
         }
 
-        // GET: api/Cursos
+        // GET: api/Alumnos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Curso>>> GetCurso()
+        public async Task<ActionResult<IEnumerable<Alumno>>> GetAlumno()
         {
-            return await _context.Curso.Include(c=>c.Usuario_Imparte_Cursos)
-                .ThenInclude(uc=>uc.Usuario).Include(c=>c.BloquesHorario).ToListAsync();
+            return await _context.Alumno.ToListAsync();
         }
 
-        // GET: api/Cursos/5
+        // GET: api/Alumnos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Curso>> GetCurso(int id)
+        public async Task<ActionResult<Alumno>> GetAlumno(int id)
         {
-            var curso = await _context.Curso.FindAsync(id);
+            var alumno = await _context.Alumno.FindAsync(id);
 
-            if (curso == null)
+            if (alumno == null)
             {
                 return NotFound();
             }
 
-            return curso;
+            return alumno;
         }
 
-        // PUT: api/Cursos/5
+        // PUT: api/Alumnos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurso(int id, Curso curso)
+        public async Task<IActionResult> PutAlumno(int id, Alumno alumno)
         {
-            if (id != curso.Id)
+            if (id != alumno.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(curso).State = EntityState.Modified;
+            _context.Entry(alumno).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +59,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CursoExists(id))
+                if (!AlumnoExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +72,36 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return NoContent();
         }
 
-        // POST: api/Cursos
+        // POST: api/Alumnos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Curso>> PostCurso(Curso curso)
+        public async Task<ActionResult<Alumno>> PostAlumno(Alumno alumno)
         {
-            _context.Curso.Add(curso);
+            _context.Alumno.Add(alumno);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCurso", new { id = curso.Id }, curso);
+            return CreatedAtAction("GetAlumno", new { id = alumno.Id }, alumno);
         }
 
-        // DELETE: api/Cursos/5
+        // DELETE: api/Alumnos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCurso(int id)
+        public async Task<IActionResult> DeleteAlumno(int id)
         {
-            var curso = await _context.Curso.FindAsync(id);
-            if (curso == null)
+            var alumno = await _context.Alumno.FindAsync(id);
+            if (alumno == null)
             {
                 return NotFound();
             }
 
-            _context.Curso.Remove(curso);
+            _context.Alumno.Remove(alumno);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CursoExists(int id)
+        private bool AlumnoExists(int id)
         {
-            return _context.Curso.Any(e => e.Id == id);
+            return _context.Alumno.Any(e => e.Id == id);
         }
     }
 }

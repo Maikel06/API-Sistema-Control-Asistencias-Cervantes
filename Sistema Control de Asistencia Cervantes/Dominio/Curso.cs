@@ -12,7 +12,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Seccion { get; set; } = null!;
-        public string Sigla { get; set; } = null!;
+        public string aula { get; set; } = null!;
         public int Anho { get; set; }
 
         public virtual ICollection<BloqueHorario> BloquesHorario { get; set; }

@@ -15,5 +15,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
         public int CursoId { get; set; }
 
         public virtual Curso? Curso { get; set; }
+
+        public Boolean activo { get; set; }
     }
 }
