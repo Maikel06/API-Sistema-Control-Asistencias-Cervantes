@@ -24,8 +24,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Curso>>> GetCurso()
         {
-            return await _context.Curso.Include(c=>c.Usuario_Imparte_Cursos)
-                .ThenInclude(uc=>uc.Usuario).Include(c=>c.BloquesHorario).ToListAsync();
+            return await _context.Curso.Include(c=>c.Usuario_Imparte_Cursos).ThenInclude(uc=>uc.Usuario).Include(c=>c.BloquesHorario).ToListAsync();
         }
 
         // GET: api/Cursos/5
