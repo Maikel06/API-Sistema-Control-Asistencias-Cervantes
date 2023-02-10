@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sistema_Control_de_Asistencia_Cervantes.Dominio;
@@ -11,9 +12,11 @@ using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 namespace SistemaControldeAsistenciaCervantes.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230209152017_Migracion12")]
+    partial class Migracion12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Contrasenha")
+                    b.Property<string>("Contraseña")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -104,13 +107,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("NombreUsuario")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Rol")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
 
                     b.ToTable("Alumno");
@@ -134,7 +130,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
                     b.HasIndex("BloqueHorarioId");
 
-                    b.ToTable("alumno_Asiste_BloquesHorario");
+                    b.ToTable("Alumno_Asiste_BloqueHorario");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", b =>
@@ -184,7 +180,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("aula")
+                    b.Property<string>("Sigla")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -226,27 +222,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.ToTable("Encargado");
                 });
 
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_BloqueHorario", b =>
-                {
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("BloqueHorarioId")
-                        .HasColumnType("integer");
-
-                    b.Property<char>("Estado")
-                        .HasColumnType("character(1)");
-
-                    b.Property<DateOnly>("Fecha")
-                        .HasColumnType("date");
-
-                    b.HasKey("UsuarioId", "BloqueHorarioId");
-
-                    b.HasIndex("BloqueHorarioId");
-
-                    b.ToTable("Usuario_Imparte_BloquesHorario");
-                });
-
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_Curso", b =>
                 {
                     b.Property<int>("UsuarioId")
@@ -254,9 +229,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
                     b.Property<int>("CursoId")
                         .HasColumnType("integer");
-
-                    b.Property<bool>("activo")
-                        .HasColumnType("boolean");
 
                     b.HasKey("UsuarioId", "CursoId");
 
@@ -325,25 +297,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Navigation("Curso");
                 });
 
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_BloqueHorario", b =>
-                {
-                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", "BloqueHorario")
-                        .WithMany("Usuario_Imparte_BloquesHorario")
-                        .HasForeignKey("BloqueHorarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_Lab.Models.Usuario", "Usuario")
-                        .WithMany("Usuario_Imparte_BloquesHorario")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BloqueHorario");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_Curso", b =>
                 {
                     b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", "Curso")
@@ -365,8 +318,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
             modelBuilder.Entity("API_Lab.Models.Usuario", b =>
                 {
-                    b.Navigation("Usuario_Imparte_BloquesHorario");
-
                     b.Navigation("Usuario_Imparte_Cursos");
                 });
 
@@ -378,121 +329,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", b =>
                 {
                     b.Navigation("Alumno_Asiste_BloqueHorarios");
-
-                    b.Navigation("Usuario_Imparte_BloquesHorario");
-                });
-
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", b =>
-                {
-                    b.Navigation("BloquesHorario");
-
-                    b.Navigation("Usuario_Imparte_Cursos");
-                });
-
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CursoId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Dia")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<TimeOnly>("Hora")
-                        .HasColumnType("time without time zone");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CursoId");
-
-                    b.ToTable("BloqueHorario");
-                });
-
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Anho")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Seccion")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Sigla")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Curso");
-                });
-
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_Curso", b =>
-                {
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CursoId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UsuarioId", "CursoId");
-
-                    b.HasIndex("CursoId");
-
-                    b.ToTable("Usuario_Imparte_Curso");
-                });
-
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", b =>
-                {
-                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", "Curso")
-                        .WithMany("BloquesHorario")
-                        .HasForeignKey("CursoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Curso");
-                });
-
-            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_Curso", b =>
-                {
-                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", "Curso")
-                        .WithMany("Usuario_Imparte_Cursos")
-                        .HasForeignKey("CursoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_Lab.Models.Usuario", "Usuario")
-                        .WithMany("Usuario_Imparte_Cursos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Curso");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("API_Lab.Models.Usuario", b =>
-                {
-                    b.Navigation("Usuario_Imparte_Cursos");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", b =>

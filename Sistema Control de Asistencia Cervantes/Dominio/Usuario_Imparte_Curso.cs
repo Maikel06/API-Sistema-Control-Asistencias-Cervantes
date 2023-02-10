@@ -1,5 +1,6 @@
 ﻿using API_Lab.Models;
 using System.ComponentModel.DataAnnotations;
+
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
@@ -15,5 +16,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
         public int CursoId { get; set; }
 
         public virtual Curso? Curso { get; set; }
+
+        public Boolean activo { get; set; }
     }
 }
