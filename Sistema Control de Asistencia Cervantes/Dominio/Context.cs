@@ -24,9 +24,13 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
         public DbSet<Usuario_Imparte_Curso> Usuario_Imparte_Curso { get; set; }
 
-        public DbSet<Alumno_Asiste_BloqueHorario> alumno_Asiste_BloquesHorario { get; set; }
+        public DbSet<Alumno_Asiste_BloqueHorario> Alumno_Asiste_BloquesHorario { get; set; }
 
         public DbSet<Usuario_Imparte_BloqueHorario> Usuario_Imparte_BloquesHorario { get; set; }
+
+        public DbSet<Alumno_Inscribe_Curso> Alumno_Inscribe_Curso { get; set; }
+
+        public DbSet<Encargado_Cargo_Alumno> Encargado_Cargo_Alumno { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,6 +85,36 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
                 .HasOne(ub => ub.BloqueHorario)
                 .WithMany(b => b.Usuario_Imparte_BloquesHorario)
                 .HasForeignKey(ub => ub.BloqueHorarioId);
+
+            //ALUMNO INSCRIBE CURSO
+            modelBuilder.Entity<Alumno_Inscribe_Curso>()
+                .HasKey(ac => new { ac.AlumnoId, ac.CursoId });
+
+            modelBuilder.Entity<Alumno_Inscribe_Curso>()
+                .HasOne(ac => ac.Alumno)
+                .WithMany(a => a.Alumno_Inscribe_Cursos)
+                .HasForeignKey(ac => ac.AlumnoId);
+
+            modelBuilder.Entity<Alumno_Inscribe_Curso>()
+                .HasOne(ac => ac.Curso)
+                .WithMany(c => c.Alumno_Inscribe_Cursos)
+                .HasForeignKey(ac => ac.CursoId);
+
+            //ENCARGADO CARGO ALUMNO
+            modelBuilder.Entity<Encargado_Cargo_Alumno>()
+                .HasKey(ea => new { ea.EncargadoId, ea.AlumnoId });
+
+            modelBuilder.Entity<Encargado_Cargo_Alumno>()
+                .HasOne(ea => ea.Encargado)
+                .WithMany(e => e.Encargado_Cargo_Alumnos)
+                .HasForeignKey(ea => ea.EncargadoId);
+
+            modelBuilder.Entity<Encargado_Cargo_Alumno>()
+                .HasOne(ea => ea.Alumno)
+                .WithMany(a => a.Encargado_Cargo_Alumnos)
+                .HasForeignKey(ea => ea.AlumnoId);
+
+
         }
 
     }

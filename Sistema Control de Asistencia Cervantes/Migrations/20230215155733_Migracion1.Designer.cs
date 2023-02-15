@@ -12,8 +12,8 @@ using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 namespace SistemaControldeAsistenciaCervantes.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230209152017_Migracion12")]
-    partial class Migracion12
+    [Migration("20230215155733_Migracion1")]
+    partial class Migracion1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Contraseña")
+                    b.Property<string>("Contrasenha")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -55,36 +55,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuario");
-                });
-
-            modelBuilder.Entity("AlumnoCurso", b =>
-                {
-                    b.Property<int>("AlumnosId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CursosId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("AlumnosId", "CursosId");
-
-                    b.HasIndex("CursosId");
-
-                    b.ToTable("AlumnoCurso");
-                });
-
-            modelBuilder.Entity("AlumnoEncargado", b =>
-                {
-                    b.Property<int>("AlumnosId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("EncargadosId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("AlumnosId", "EncargadosId");
-
-                    b.HasIndex("EncargadosId");
-
-                    b.ToTable("AlumnoEncargado");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", b =>
@@ -130,7 +100,22 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
                     b.HasIndex("BloqueHorarioId");
 
-                    b.ToTable("Alumno_Asiste_BloqueHorario");
+                    b.ToTable("Alumno_Asiste_BloquesHorario");
+                });
+
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno_Inscribe_Curso", b =>
+                {
+                    b.Property<int>("AlumnoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CursoId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AlumnoId", "CursoId");
+
+                    b.HasIndex("CursoId");
+
+                    b.ToTable("Alumno_Inscribe_Curso");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", b =>
@@ -180,7 +165,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Sigla")
+                    b.Property<string>("aula")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -222,6 +207,42 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.ToTable("Encargado");
                 });
 
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Encargado_Cargo_Alumno", b =>
+                {
+                    b.Property<int>("EncargadoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AlumnoId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("EncargadoId", "AlumnoId");
+
+                    b.HasIndex("AlumnoId");
+
+                    b.ToTable("Encargado_Cargo_Alumno");
+                });
+
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_BloqueHorario", b =>
+                {
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("BloqueHorarioId")
+                        .HasColumnType("integer");
+
+                    b.Property<char>("Estado")
+                        .HasColumnType("character(1)");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.HasKey("UsuarioId", "BloqueHorarioId");
+
+                    b.HasIndex("BloqueHorarioId");
+
+                    b.ToTable("Usuario_Imparte_BloquesHorario");
+                });
+
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_Curso", b =>
                 {
                     b.Property<int>("UsuarioId")
@@ -230,41 +251,14 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Property<int>("CursoId")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("activo")
+                        .HasColumnType("boolean");
+
                     b.HasKey("UsuarioId", "CursoId");
 
                     b.HasIndex("CursoId");
 
                     b.ToTable("Usuario_Imparte_Curso");
-                });
-
-            modelBuilder.Entity("AlumnoCurso", b =>
-                {
-                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", null)
-                        .WithMany()
-                        .HasForeignKey("AlumnosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", null)
-                        .WithMany()
-                        .HasForeignKey("CursosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AlumnoEncargado", b =>
-                {
-                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", null)
-                        .WithMany()
-                        .HasForeignKey("AlumnosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Encargado", null)
-                        .WithMany()
-                        .HasForeignKey("EncargadosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno_Asiste_BloqueHorario", b =>
@@ -286,6 +280,25 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Navigation("BloqueHorario");
                 });
 
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno_Inscribe_Curso", b =>
+                {
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", "Alumno")
+                        .WithMany("Alumno_Inscribe_Cursos")
+                        .HasForeignKey("AlumnoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", "Curso")
+                        .WithMany("Alumno_Inscribe_Cursos")
+                        .HasForeignKey("CursoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Alumno");
+
+                    b.Navigation("Curso");
+                });
+
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", b =>
                 {
                     b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", "Curso")
@@ -295,6 +308,44 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .IsRequired();
 
                     b.Navigation("Curso");
+                });
+
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Encargado_Cargo_Alumno", b =>
+                {
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", "Alumno")
+                        .WithMany("Encargado_Cargo_Alumnos")
+                        .HasForeignKey("AlumnoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Encargado", "Encargado")
+                        .WithMany("Encargado_Cargo_Alumnos")
+                        .HasForeignKey("EncargadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Alumno");
+
+                    b.Navigation("Encargado");
+                });
+
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_BloqueHorario", b =>
+                {
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", "BloqueHorario")
+                        .WithMany("Usuario_Imparte_BloquesHorario")
+                        .HasForeignKey("BloqueHorarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API_Lab.Models.Usuario", "Usuario")
+                        .WithMany("Usuario_Imparte_BloquesHorario")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BloqueHorario");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_Curso", b =>
@@ -318,24 +369,39 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
             modelBuilder.Entity("API_Lab.Models.Usuario", b =>
                 {
+                    b.Navigation("Usuario_Imparte_BloquesHorario");
+
                     b.Navigation("Usuario_Imparte_Cursos");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", b =>
                 {
                     b.Navigation("Alumno_Asiste_BloqueHorarios");
+
+                    b.Navigation("Alumno_Inscribe_Cursos");
+
+                    b.Navigation("Encargado_Cargo_Alumnos");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.BloqueHorario", b =>
                 {
                     b.Navigation("Alumno_Asiste_BloqueHorarios");
+
+                    b.Navigation("Usuario_Imparte_BloquesHorario");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Curso", b =>
                 {
+                    b.Navigation("Alumno_Inscribe_Cursos");
+
                     b.Navigation("BloquesHorario");
 
                     b.Navigation("Usuario_Imparte_Cursos");
+                });
+
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Encargado", b =>
+                {
+                    b.Navigation("Encargado_Cargo_Alumnos");
                 });
 #pragma warning restore 612, 618
         }
