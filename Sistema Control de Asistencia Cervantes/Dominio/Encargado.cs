@@ -4,7 +4,7 @@
     {
 
         public Encargado() {
-            Alumnos = new HashSet<Alumno>();
+            Encargado_Cargo_Alumnos = new HashSet<Encargado_Cargo_Alumno>();
         }
 
         public int Id { get; set; }
@@ -14,6 +14,6 @@
         public String Correo { get; set; } = null!;
         public String Celular { get; set; } = null!;
 
-        public virtual ICollection<Alumno> Alumnos { get; set; }
+        public virtual ICollection<Encargado_Cargo_Alumno> Encargado_Cargo_Alumnos { get; set; }
     }
 }

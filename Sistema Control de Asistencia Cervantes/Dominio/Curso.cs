@@ -7,7 +7,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
         public Curso() {
             this.BloquesHorario = new HashSet<BloqueHorario>();
             this.Usuario_Imparte_Cursos = new HashSet<Usuario_Imparte_Curso>();
-            this.Alumnos = new HashSet<Alumno>();
+            this.Alumno_Inscribe_Cursos = new HashSet<Alumno_Inscribe_Curso>();
         }
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -19,7 +19,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
         public virtual ICollection<Usuario_Imparte_Curso> Usuario_Imparte_Cursos { get; set; }
 
-        public virtual ICollection<Alumno> Alumnos { get; set; }
+        public virtual ICollection<Alumno_Inscribe_Curso> Alumno_Inscribe_Cursos { get; set; }
 
     }
 }
