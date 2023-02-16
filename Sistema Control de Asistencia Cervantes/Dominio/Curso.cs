@@ -1,4 +1,4 @@
-﻿using API_Lab.Models;
+﻿using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 
 namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 {

@@ -24,7 +24,12 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario_Imparte_Curso>>> GetUsuario_Imparte_Curso()
         {
-            return await _context.Usuario_Imparte_Curso.Include(uc=>uc.Curso).Include(uc=>uc.Usuario).ToListAsync();
+            return await _context.Usuario_Imparte_Curso
+                .Include(uc => uc.Usuario)
+
+                .Include(uc => uc.Curso)
+
+                .ToListAsync();
         }
 
         // GET: api/Usuario_Imparte_Curso/5

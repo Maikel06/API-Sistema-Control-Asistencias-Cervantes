@@ -11,56 +11,50 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CursosController : ControllerBase
+    public class EncargadosController : ControllerBase
     {
         private readonly Context _context;
 
-        public CursosController(Context context)
+        public EncargadosController(Context context)
         {
             _context = context;
         }
 
-        // GET: api/Cursos
+        // GET: api/Encargados
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Curso>>> GetCurso()
+        public async Task<ActionResult<IEnumerable<Encargado>>> GetEncargado()
         {
-            return await _context.Curso
-                .Include(c=>c.Usuario_Imparte_Cursos)
-                .ThenInclude(uc=>uc.Usuario)
-
-                .Include(c=>c.BloquesHorario)
-
-                .Include(c => c.Alumno_Inscribe_Cursos)
-                .ThenInclude(ac => ac.Alumno)
-
+            return await _context.Encargado
+                .Include(e => e.Encargado_Cargo_Alumnos)
+                .ThenInclude(ea => ea.Alumno)
                 .ToListAsync();
         }
 
-        // GET: api/Cursos/5
+        // GET: api/Encargados/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Curso>> GetCurso(int id)
+        public async Task<ActionResult<Encargado>> GetEncargado(int id)
         {
-            var curso = await _context.Curso.FindAsync(id);
+            var encargado = await _context.Encargado.FindAsync(id);
 
-            if (curso == null)
+            if (encargado == null)
             {
                 return NotFound();
             }
 
-            return curso;
+            return encargado;
         }
 
-        // PUT: api/Cursos/5
+        // PUT: api/Encargados/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurso(int id, Curso curso)
+        public async Task<IActionResult> PutEncargado(int id, Encargado encargado)
         {
-            if (id != curso.Id)
+            if (id != encargado.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(curso).State = EntityState.Modified;
+            _context.Entry(encargado).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +62,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CursoExists(id))
+                if (!EncargadoExists(id))
                 {
                     return NotFound();
                 }
@@ -81,36 +75,36 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return NoContent();
         }
 
-        // POST: api/Cursos
+        // POST: api/Encargados
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Curso>> PostCurso(Curso curso)
+        public async Task<ActionResult<Encargado>> PostEncargado(Encargado encargado)
         {
-            _context.Curso.Add(curso);
+            _context.Encargado.Add(encargado);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCurso", new { id = curso.Id }, curso);
+            return CreatedAtAction("GetEncargado", new { id = encargado.Id }, encargado);
         }
 
-        // DELETE: api/Cursos/5
+        // DELETE: api/Encargados/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCurso(int id)
+        public async Task<IActionResult> DeleteEncargado(int id)
         {
-            var curso = await _context.Curso.FindAsync(id);
-            if (curso == null)
+            var encargado = await _context.Encargado.FindAsync(id);
+            if (encargado == null)
             {
                 return NotFound();
             }
 
-            _context.Curso.Remove(curso);
+            _context.Encargado.Remove(encargado);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CursoExists(int id)
+        private bool EncargadoExists(int id)
         {
-            return _context.Curso.Any(e => e.Id == id);
+            return _context.Encargado.Any(e => e.Id == id);
         }
     }
 }
