@@ -110,5 +110,13 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         {
             return _context.Usuario.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult<Boolean>> Existe(String nombreUsuario, String contrasenha)
+        {
+            var valid = _context.Usuario.Any(u => u.NombreUsuario == nombreUsuario && u.Contrasenha == contrasenha);
+            return valid;
+        }
     }
 }
