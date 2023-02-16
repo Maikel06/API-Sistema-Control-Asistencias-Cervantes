@@ -28,6 +28,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
                 .Include(ab=>ab.Alumno)
 
                 .Include(ab => ab.BloqueHorario)
+                .ThenInclude(b=>b.Curso)
 
                 .ToListAsync();
         }
