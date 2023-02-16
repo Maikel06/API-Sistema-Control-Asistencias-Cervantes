@@ -24,7 +24,16 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BloqueHorario>>> GetBloqueHorario()
         {
-            return await _context.BloqueHorario.ToListAsync();
+            return await _context.BloqueHorario
+                .Include(b => b.Curso)
+
+                .Include(b => b.Alumno_Asiste_BloqueHorarios)
+                .ThenInclude(ab => ab.Alumno)
+
+                .Include(b => b.Usuario_Imparte_BloquesHorario)
+                .ThenInclude(ub => ub.Usuario)
+
+                .ToListAsync();
         }
 
         // GET: api/BloquesHorario/5

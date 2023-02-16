@@ -1,7 +1,7 @@
 ﻿using MessagePack;
 using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 
-namespace API_Lab.Models
+namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 {
     public partial class Usuario
     {

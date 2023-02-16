@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using API_Lab.Models;
 using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 
 namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
@@ -25,7 +24,13 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
         {
-            return await _context.Usuario.Include(uc=>uc.Usuario_Imparte_Cursos).ThenInclude(c=>c.Curso)
+            return await _context.Usuario
+                .Include(u => u.Usuario_Imparte_Cursos)
+                .ThenInclude(uc => uc.Curso)
+
+                .Include(u => u.Usuario_Imparte_BloquesHorario)
+                .ThenInclude(ub => ub.BloqueHorario)
+                
                 .ToListAsync();
         }
 
