@@ -10,9 +10,9 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             this.Alumno_Inscribe_Cursos = new HashSet<Alumno_Inscribe_Curso>();
         }
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string Nombre { get; set; } = null!;
         public string Seccion { get; set; } = null!;
-        public string aula { get; set; } = null!;
+        public String Aula { get; set; } = null!; 
         public int Anho { get; set; }
 
         public virtual ICollection<BloqueHorario> BloquesHorario { get; set; }

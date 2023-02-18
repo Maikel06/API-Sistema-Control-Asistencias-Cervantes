@@ -16,11 +16,11 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
         public virtual Alumno? Alumno { get; set; }
 
         public DateOnly Fecha { get; set; }
-        public char Estado { get; set; }
+        public char Estado { get; set; } // P Presente, J AusenciaJustificada, I AusenciaInjustificada
 
-        
 
-        
-        
+
+
+
     }
 }

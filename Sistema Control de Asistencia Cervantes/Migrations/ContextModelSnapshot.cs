@@ -22,38 +22,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("API_Lab.Models.Usuario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Contrasenha")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("NombreUsuario")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Rol")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Usuario");
-                });
-
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", b =>
                 {
                     b.Property<int>("Id")
@@ -64,17 +32,23 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Cedula")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Cedula" }, "UQ_CEDULA_ESTUDIANTE")
+                        .IsUnique();
 
                     b.ToTable("Alumno");
                 });
@@ -87,13 +61,15 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Property<int>("BloqueHorarioId")
                         .HasColumnType("integer");
 
-                    b.Property<char>("Estado")
-                        .HasColumnType("character(1)");
-
                     b.Property<DateOnly>("Fecha")
                         .HasColumnType("date");
 
-                    b.HasKey("AlumnoId", "BloqueHorarioId");
+                    b.Property<char>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("character(1)")
+                        .HasDefaultValue('P');
+
+                    b.HasKey("AlumnoId", "BloqueHorarioId", "Fecha");
 
                     b.HasIndex("BloqueHorarioId");
 
@@ -126,9 +102,8 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Property<int>("CursoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Dia")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<char>("Dia")
+                        .HasColumnType("character(1)");
 
                     b.Property<TimeOnly>("Hora")
                         .HasColumnType("time without time zone");
@@ -152,19 +127,24 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Anho")
-                        .HasColumnType("integer");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(2023);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Aula")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(5)
+                        .HasColumnType("character varying(5)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Seccion")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("aula")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(5)
+                        .HasColumnType("character varying(5)");
 
                     b.HasKey("Id");
 
@@ -181,25 +161,33 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Cedula")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Correo")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex(new[] { "Cedula" }, "UQ_CEDULA_ENCARGADO")
+                        .IsUnique();
 
                     b.ToTable("Encargado");
                 });
@@ -219,6 +207,41 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.ToTable("Encargado_Cargo_Alumno");
                 });
 
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Contrasenha")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("NombreUsuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Rol")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuario");
+                });
+
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario_Imparte_BloqueHorario", b =>
                 {
                     b.Property<int>("UsuarioId")
@@ -227,13 +250,24 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Property<int>("BloqueHorarioId")
                         .HasColumnType("integer");
 
-                    b.Property<char>("Estado")
-                        .HasColumnType("character(1)");
-
                     b.Property<DateOnly>("Fecha")
-                        .HasColumnType("date");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("date")
+                        .HasDefaultValue(new DateOnly(2023, 2, 18));
 
-                    b.HasKey("UsuarioId", "BloqueHorarioId");
+                    b.Property<char>("Estado")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("character(1)")
+                        .HasDefaultValue('P');
+
+                    b.Property<string>("Nota")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasDefaultValue("");
+
+                    b.HasKey("UsuarioId", "BloqueHorarioId", "Fecha");
 
                     b.HasIndex("BloqueHorarioId");
 
@@ -249,7 +283,9 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .HasColumnType("integer");
 
                     b.Property<bool>("activo")
-                        .HasColumnType("boolean");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.HasKey("UsuarioId", "CursoId");
 
@@ -334,7 +370,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API_Lab.Models.Usuario", "Usuario")
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario", "Usuario")
                         .WithMany("Usuario_Imparte_BloquesHorario")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -353,7 +389,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API_Lab.Models.Usuario", "Usuario")
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario", "Usuario")
                         .WithMany("Usuario_Imparte_Cursos")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -362,13 +398,6 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Navigation("Curso");
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("API_Lab.Models.Usuario", b =>
-                {
-                    b.Navigation("Usuario_Imparte_BloquesHorario");
-
-                    b.Navigation("Usuario_Imparte_Cursos");
                 });
 
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", b =>
@@ -399,6 +428,13 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Encargado", b =>
                 {
                     b.Navigation("Encargado_Cargo_Alumnos");
+                });
+
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Usuario", b =>
+                {
+                    b.Navigation("Usuario_Imparte_BloquesHorario");
+
+                    b.Navigation("Usuario_Imparte_Cursos");
                 });
 #pragma warning restore 612, 618
         }

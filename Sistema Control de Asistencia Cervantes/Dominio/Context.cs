@@ -59,7 +59,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
             //ALUMNO ASISTE BLOQUEHORARIO
             modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
-                .HasKey(ab => new { ab.AlumnoId, ab.BloqueHorarioId });
+                .HasKey(ab => new { ab.AlumnoId, ab.BloqueHorarioId, ab.Fecha });
 
             modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
                 .HasOne(ab => ab.Alumno)
@@ -74,7 +74,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
             //USUARIO ASISTE BLOQUE HORARIO
             modelBuilder.Entity<Usuario_Imparte_BloqueHorario>()
-                .HasKey(ub => new { ub.UsuarioId, ub.BloqueHorarioId });
+                .HasKey(ub => new { ub.UsuarioId, ub.BloqueHorarioId, ub.Fecha });
 
             modelBuilder.Entity<Usuario_Imparte_BloqueHorario>()
                 .HasOne(ub => ub.Usuario)
@@ -115,7 +115,93 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
                 .HasForeignKey(ea => ea.AlumnoId);
 
 
+
+
+
+            //ESPECIFICACION DE ATRIBUTOS DE OBJETOS DEL DOMINIO
+            
+            modelBuilder.Entity<Usuario_Imparte_Curso>(entity =>
+            {
+
+                entity.Property(uc => uc.activo).HasDefaultValue(true);
+
+            });
+
+            modelBuilder.Entity<Usuario_Imparte_BloqueHorario>(entity =>
+            {
+                
+                entity.Property(ub => ub.Estado).HasDefaultValue('P');
+
+                entity.Property(ub => ub.Nota).HasDefaultValue(String.Empty).HasMaxLength(200);
+
+                entity.Property(ub => ub.Fecha).HasDefaultValue(DateOnly.FromDateTime(DateTime.Now));
+            });
+
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+
+                entity.Property(u => u.Nombre).HasMaxLength(100);
+
+                entity.Property(u => u.Apellido).HasMaxLength(100);
+
+                entity.Property(u => u.Contrasenha).HasMaxLength(50);
+
+            });
+
+
+            modelBuilder.Entity<Encargado>(entity =>
+            {
+                entity.HasIndex(e => e.Cedula, "UQ_CEDULA_ENCARGADO")
+                    .IsUnique();
+
+                entity.Property(e => e.Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.Apellidos).HasMaxLength(100);
+
+                entity.Property(e => e.Cedula).HasMaxLength(20);
+
+                entity.Property(e => e.Correo).HasMaxLength(200);
+
+                entity.Property(e => e.Celular).HasMaxLength(20);
+
+            });
+
+            modelBuilder.Entity<Curso>(entity =>
+            {
+
+                entity.Property(c => c.Nombre).HasMaxLength(50);
+
+                entity.Property(c => c.Seccion).HasMaxLength(5);
+
+                entity.Property(c => c.Aula).HasMaxLength(5);
+
+                entity.Property(c => c.Anho).HasDefaultValue(DateTime.Now.Year);
+
+            });
+
+            modelBuilder.Entity<Alumno_Asiste_BloqueHorario>(entity =>
+            {
+ 
+                entity.Property(ab => ab.Estado).HasDefaultValue('P');
+
+            });
+
+            modelBuilder.Entity<Alumno>(entity =>
+            {
+                entity.HasIndex(a => a.Cedula, "UQ_CEDULA_ESTUDIANTE")
+                    .IsUnique();
+
+                entity.Property(a => a.Cedula).HasMaxLength(20);
+
+                entity.Property(a => a.Nombre).HasMaxLength(20);
+
+                entity.Property(a => a.Apellidos).HasMaxLength(20);
+
+            });
+
         }
 
     }
+
 }

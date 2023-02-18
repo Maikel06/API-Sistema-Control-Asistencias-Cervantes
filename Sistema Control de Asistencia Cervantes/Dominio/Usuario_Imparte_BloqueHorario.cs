@@ -15,7 +15,12 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
         public virtual Usuario? Usuario { get; set; }
 
+        [Key]
         public DateOnly Fecha { get; set; }
-        public char Estado { get; set; }
+
+        public char Estado { get; set; } // P Presente, J AusenciaJustificada, I AusenciaInjustificada
+
+        public String Nota { get; set; } = null!;
     }
 }
+

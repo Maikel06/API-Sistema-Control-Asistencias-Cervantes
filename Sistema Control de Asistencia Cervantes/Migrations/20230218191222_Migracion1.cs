@@ -18,9 +18,9 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Cedula = table.Column<string>(type: "text", nullable: false),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    Apellidos = table.Column<string>(type: "text", nullable: false)
+                    Cedula = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Apellidos = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,10 +33,10 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Seccion = table.Column<string>(type: "text", nullable: false),
-                    aula = table.Column<string>(type: "text", nullable: false),
-                    Anho = table.Column<int>(type: "integer", nullable: false)
+                    Nombre = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Seccion = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
+                    Aula = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: false),
+                    Anho = table.Column<int>(type: "integer", nullable: false, defaultValue: 2023)
                 },
                 constraints: table =>
                 {
@@ -49,11 +49,11 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    Apellidos = table.Column<string>(type: "text", nullable: false),
-                    Cedula = table.Column<string>(type: "text", nullable: false),
-                    Correo = table.Column<string>(type: "text", nullable: false),
-                    Celular = table.Column<string>(type: "text", nullable: false)
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Apellidos = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Cedula = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Correo = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Celular = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,9 +66,9 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    Apellido = table.Column<string>(type: "text", nullable: false),
-                    Contrasenha = table.Column<string>(type: "text", nullable: false),
+                    Nombre = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Apellido = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Contrasenha = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Rol = table.Column<bool>(type: "boolean", nullable: false),
                     NombreUsuario = table.Column<string>(type: "text", nullable: false)
                 },
@@ -108,7 +108,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Numero = table.Column<int>(type: "integer", nullable: false),
-                    Dia = table.Column<string>(type: "text", nullable: false),
+                    Dia = table.Column<char>(type: "character(1)", nullable: false),
                     Hora = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
                     CursoId = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -153,7 +153,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 {
                     UsuarioId = table.Column<int>(type: "integer", nullable: false),
                     CursoId = table.Column<int>(type: "integer", nullable: false),
-                    activo = table.Column<bool>(type: "boolean", nullable: false)
+                    activo = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -179,11 +179,11 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     BloqueHorarioId = table.Column<int>(type: "integer", nullable: false),
                     AlumnoId = table.Column<int>(type: "integer", nullable: false),
                     Fecha = table.Column<DateOnly>(type: "date", nullable: false),
-                    Estado = table.Column<char>(type: "character(1)", nullable: false)
+                    Estado = table.Column<char>(type: "character(1)", nullable: false, defaultValue: 'P')
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alumno_Asiste_BloquesHorario", x => new { x.AlumnoId, x.BloqueHorarioId });
+                    table.PrimaryKey("PK_Alumno_Asiste_BloquesHorario", x => new { x.AlumnoId, x.BloqueHorarioId, x.Fecha });
                     table.ForeignKey(
                         name: "FK_Alumno_Asiste_BloquesHorario_Alumno_AlumnoId",
                         column: x => x.AlumnoId,
@@ -204,12 +204,13 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 {
                     BloqueHorarioId = table.Column<int>(type: "integer", nullable: false),
                     UsuarioId = table.Column<int>(type: "integer", nullable: false),
-                    Fecha = table.Column<DateOnly>(type: "date", nullable: false),
-                    Estado = table.Column<char>(type: "character(1)", nullable: false)
+                    Fecha = table.Column<DateOnly>(type: "date", nullable: false, defaultValue: new DateOnly(2023, 2, 18)),
+                    Estado = table.Column<char>(type: "character(1)", nullable: false, defaultValue: 'P'),
+                    Nota = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false, defaultValue: "")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario_Imparte_BloquesHorario", x => new { x.UsuarioId, x.BloqueHorarioId });
+                    table.PrimaryKey("PK_Usuario_Imparte_BloquesHorario", x => new { x.UsuarioId, x.BloqueHorarioId, x.Fecha });
                     table.ForeignKey(
                         name: "FK_Usuario_Imparte_BloquesHorario_BloqueHorario_BloqueHorarioId",
                         column: x => x.BloqueHorarioId,
@@ -225,6 +226,12 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "UQ_CEDULA_ESTUDIANTE",
+                table: "Alumno",
+                column: "Cedula",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Alumno_Asiste_BloquesHorario_BloqueHorarioId",
                 table: "Alumno_Asiste_BloquesHorario",
                 column: "BloqueHorarioId");
@@ -238,6 +245,12 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                 name: "IX_BloqueHorario_CursoId",
                 table: "BloqueHorario",
                 column: "CursoId");
+
+            migrationBuilder.CreateIndex(
+                name: "UQ_CEDULA_ENCARGADO",
+                table: "Encargado",
+                column: "Cedula",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Encargado_Cargo_Alumno_AlumnoId",
