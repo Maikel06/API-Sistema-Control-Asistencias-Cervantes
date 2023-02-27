@@ -84,6 +84,9 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+
+            //encriptar 
+            usuario.Contrasenha=Encryp.GetSHA256(usuario.Contrasenha);
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync();
 
