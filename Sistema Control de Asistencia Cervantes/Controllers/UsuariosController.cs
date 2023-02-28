@@ -115,11 +115,23 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         }
 
         [HttpGet]
-        [Route("[action]")]
-        public async Task<ActionResult<Boolean>> Existe(String nombreUsuario, String contrasenha)
+        [Route("Existe")]
+        public async Task<ActionResult<Boolean>> Existe(string nombreUsuario, string contrasenha)
         {
-            var valid = _context.Usuario.Any(u => u.NombreUsuario == nombreUsuario && u.Contrasenha == contrasenha);
-            return valid;
+
+            var encrypContrasehna= Encryp.GetSHA256(contrasenha);
+            var user = (from d in _context.Usuario
+                       where d.Contrasenha == encrypContrasehna && d.NombreUsuario==nombreUsuario
+                       select d).FirstOrDefault();
+
+            if (user != null) {
+
+                return true;
+            
+            }
+                
+              
+            return false;
         }
     }
 }
