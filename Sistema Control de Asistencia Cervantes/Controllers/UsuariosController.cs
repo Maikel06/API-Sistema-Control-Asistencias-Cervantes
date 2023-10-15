@@ -118,10 +118,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [Route("Existe")]
         public async Task<ActionResult<Boolean>> Existe(string nombreUsuario, string contrasenha)
         {
-
-            var encrypContrasehna= Encryp.GetSHA256(contrasenha);
+            Console.WriteLine("llego a back" + nombreUsuario);
+            //var encrypContrasehna= Encryp.GetSHA256(contrasenha);
             var user = (from d in _context.Usuario
-                       where d.Contrasenha == encrypContrasehna && d.NombreUsuario==nombreUsuario
+                       where d.Contrasenha == contrasenha && d.NombreUsuario==nombreUsuario
                        select d).FirstOrDefault();
 
             if (user != null) {
