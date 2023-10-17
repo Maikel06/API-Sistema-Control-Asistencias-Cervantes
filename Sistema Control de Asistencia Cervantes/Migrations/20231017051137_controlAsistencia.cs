@@ -5,7 +5,7 @@
 namespace SistemaControldeAsistenciaCervantes.Migrations
 {
     /// <inheritdoc />
-    public partial class NombreDeLaMigracion : Migration
+    public partial class controlAsistencia : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

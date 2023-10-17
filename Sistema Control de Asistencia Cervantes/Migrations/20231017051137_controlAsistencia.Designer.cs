@@ -12,8 +12,8 @@ using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 namespace SistemaControldeAsistenciaCervantes.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230915040123_NombreDeLaMigracion")]
-    partial class NombreDeLaMigracion
+    [Migration("20231017051137_controlAsistencia")]
+    partial class controlAsistencia
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

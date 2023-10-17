@@ -84,7 +84,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
         // POST: api/Alumnos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("Registrar")]
         public async Task<ActionResult<Alumno>> PostAlumno(Alumno alumno)
         {
             _context.Alumno.Add(alumno);
