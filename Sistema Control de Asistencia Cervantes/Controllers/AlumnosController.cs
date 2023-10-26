@@ -14,6 +14,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
     public class AlumnosController : ControllerBase
     {
         private readonly Context _context;
+        private bool continuar=true;
 
         public AlumnosController(Context context)
         {
@@ -21,21 +22,44 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         }
 
         // GET: api/Alumnos
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Alumno>>> GetAlumno()
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Alumno>>> GetAlumno()
+        //{
+        //    return await _context.Alumno
+        //        .Include(a => a.Alumno_Inscribe_Cursos)
+        //        .ThenInclude(ac => ac.Curso)
+
+        //        .Include(a => a.Encargado_Cargo_Alumnos)
+        //        .ThenInclude(ea => ea.Encargado)
+
+        //        .Include(a => a.Alumno_Asiste_BloqueHorarios)
+        //        .ThenInclude(ab => ab.BloqueHorario)
+
+        //        .ToListAsync();
+        //}
+        [HttpGet("ComprobarAlumno")]
+        public async Task<ActionResult<IEnumerable<Alumno>>> ComprobarAlumno(Alumno alumno)
         {
-            return await _context.Alumno
-                .Include(a => a.Alumno_Inscribe_Cursos)
-                .ThenInclude(ac => ac.Curso)
+            List<Alumno> alumnos = await _context.Alumno.ToListAsync();
 
-                .Include(a => a.Encargado_Cargo_Alumnos)
-                .ThenInclude(ea => ea.Encargado)
+            foreach (Alumno aux in alumnos)
+            {
+                if (aux.Cedula == alumno.Cedula)
+                {
+                    this.continuar = false;
+                    break;
+                }
+            }
 
-                .Include(a => a.Alumno_Asiste_BloqueHorarios)
-                .ThenInclude(ab => ab.BloqueHorario)
-
-                .ToListAsync();
+            return Ok(alumnos);
         }
+
+        [HttpGet("ListaEstudiantes")]
+        public async Task<ActionResult<IEnumerable<Alumno>>> listaEstudiantes()
+        {
+            return await _context.Alumno.ToListAsync();
+        }
+
 
         // GET: api/Alumnos/5
         [HttpGet("{id}")]
@@ -56,6 +80,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAlumno(int id, Alumno alumno)
         {
+            Console.WriteLine("llego a putAlumnos " + alumno.Nombre);
             if (id != alumno.Id)
             {
                 return BadRequest();
@@ -87,16 +112,25 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpPost("Registrar")]
         public async Task<ActionResult<Alumno>> PostAlumno(Alumno alumno)
         {
-            _context.Alumno.Add(alumno);
-            await _context.SaveChangesAsync();
+            await this.ComprobarAlumno(alumno);
+            if (this.continuar)
+            {
+                _context.Alumno.Add(alumno);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAlumno", new { id = alumno.Id }, alumno);
+                return CreatedAtAction("GetAlumno", new { id = alumno.Id }, alumno);
+            }
+            else
+            {
+                return BadRequest("Ya existe la cedula ingresada");
+            }
         }
 
         // DELETE: api/Alumnos/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAlumno(int id)
         {
+            Console.WriteLine("en delete");
             var alumno = await _context.Alumno.FindAsync(id);
             if (alumno == null)
             {

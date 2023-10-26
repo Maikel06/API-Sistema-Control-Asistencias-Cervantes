@@ -61,10 +61,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
                 .HasKey(ab => new { ab.AlumnoId, ab.BloqueHorarioId });
 
-            modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
-                .HasOne(ab => ab.Alumno)
-                .WithMany(a => a.Alumno_Asiste_BloqueHorarios)
-                .HasForeignKey(ab => ab.AlumnoId);
+            //modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
+            //    .HasOne(ab => ab.Alumno)
+            //    .WithMany(a => a.Alumno_Asiste_BloqueHorarios)
+            //    .HasForeignKey(ab => ab.AlumnoId);
 
             modelBuilder.Entity<Alumno_Asiste_BloqueHorario>()
                 .HasOne(ab => ab.BloqueHorario)
@@ -90,10 +90,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             modelBuilder.Entity<Alumno_Inscribe_Curso>()
                 .HasKey(ac => new { ac.AlumnoId, ac.CursoId });
 
-            modelBuilder.Entity<Alumno_Inscribe_Curso>()
-                .HasOne(ac => ac.Alumno)
-                .WithMany(a => a.Alumno_Inscribe_Cursos)
-                .HasForeignKey(ac => ac.AlumnoId);
+            //modelBuilder.Entity<Alumno_Inscribe_Curso>()
+            //    .HasOne(ac => ac.Alumno)
+            //    .WithMany(a => a.Alumno_Inscribe_Cursos)
+            //    .HasForeignKey(ac => ac.AlumnoId);
 
             modelBuilder.Entity<Alumno_Inscribe_Curso>()
                 .HasOne(ac => ac.Curso)
@@ -109,10 +109,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
                 .WithMany(e => e.Encargado_Cargo_Alumnos)
                 .HasForeignKey(ea => ea.EncargadoId);
 
-            modelBuilder.Entity<Encargado_Cargo_Alumno>()
-                .HasOne(ea => ea.Alumno)
-                .WithMany(a => a.Encargado_Cargo_Alumnos)
-                .HasForeignKey(ea => ea.AlumnoId);
+            //modelBuilder.Entity<Encargado_Cargo_Alumno>()
+            //    .HasOne(ea => ea.Alumno)
+            //    .WithMany(a => a.Encargado_Cargo_Alumnos)
+            //    .HasForeignKey(ea => ea.AlumnoId);
 
 
         }
