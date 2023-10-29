@@ -86,7 +86,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         {
 
             //encriptar 
-            usuario.Contrasenha=Encryp.GetSHA256(usuario.Contrasenha);
+            //usuario.Contrasenha=Encryp.GetSHA256(usuario.Contrasenha);
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync();
 

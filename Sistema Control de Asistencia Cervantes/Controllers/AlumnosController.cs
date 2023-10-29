@@ -80,7 +80,6 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAlumno(int id, Alumno alumno)
         {
-            Console.WriteLine("llego a putAlumnos " + alumno.Nombre);
             if (id != alumno.Id)
             {
                 return BadRequest();
@@ -122,7 +121,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             }
             else
             {
-                return BadRequest("Ya existe la cedula ingresada");
+                return Ok(false);
             }
         }
 
