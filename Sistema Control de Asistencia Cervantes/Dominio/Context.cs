@@ -44,17 +44,17 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
                 .WithMany(u => u.Usuario_Imparte_Cursos)
                 .HasForeignKey(uc => uc.UsuarioId);
 
-            modelBuilder.Entity<Usuario_Imparte_Curso>()
-                .HasOne(uc => uc.Curso)
-                .WithMany(c => c.Usuario_Imparte_Cursos)
-                .HasForeignKey(uc => uc.CursoId);
+            //modelBuilder.Entity<Usuario_Imparte_Curso>()
+            //    .HasOne(uc => uc.Curso)
+            //    .WithMany(c => c.Usuario_Imparte_Cursos)
+            //    .HasForeignKey(uc => uc.CursoId);
 
 
             //BLOQUE HORARIO
-            modelBuilder.Entity<BloqueHorario>()
-                .HasOne(b => b.Curso)
-                .WithMany(c => c.BloquesHorario)
-                .HasForeignKey(b => b.CursoId);
+            //modelBuilder.Entity<BloqueHorario>()
+            //    .HasOne(b => b.Curso)
+            //    .WithMany(c => c.BloquesHorario)
+            //    .HasForeignKey(b => b.CursoId);
 
 
             //ALUMNO ASISTE BLOQUEHORARIO
@@ -95,10 +95,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             //    .WithMany(a => a.Alumno_Inscribe_Cursos)
             //    .HasForeignKey(ac => ac.AlumnoId);
 
-            modelBuilder.Entity<Alumno_Inscribe_Curso>()
-                .HasOne(ac => ac.Curso)
-                .WithMany(c => c.Alumno_Inscribe_Cursos)
-                .HasForeignKey(ac => ac.CursoId);
+            //modelBuilder.Entity<Alumno_Inscribe_Curso>()
+            //    .HasOne(ac => ac.Curso)
+            //    .WithMany(c => c.Alumno_Inscribe_Cursos)
+            //    .HasForeignKey(ac => ac.CursoId);
 
             //ENCARGADO CARGO ALUMNO
             modelBuilder.Entity<Encargado_Cargo_Alumno>()
