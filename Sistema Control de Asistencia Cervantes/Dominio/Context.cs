@@ -39,10 +39,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             modelBuilder.Entity<Usuario_Imparte_Curso>()
                 .HasKey(uc => new { uc.UsuarioId, uc.CursoId });
 
-            modelBuilder.Entity<Usuario_Imparte_Curso>()
-                .HasOne(uc => uc.Usuario)
-                .WithMany(u => u.Usuario_Imparte_Cursos)
-                .HasForeignKey(uc => uc.UsuarioId);
+            //modelBuilder.Entity<Usuario_Imparte_Curso>()
+              //  .HasOne(uc => uc.Usuario)
+                //.WithMany(u => u.Usuario_Imparte_Cursos)
+                //.HasForeignKey(uc => uc.UsuarioId);
 
             modelBuilder.Entity<Usuario_Imparte_Curso>()
                 .HasOne(uc => uc.Curso)
@@ -76,10 +76,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             modelBuilder.Entity<Usuario_Imparte_BloqueHorario>()
                 .HasKey(ub => new { ub.UsuarioId, ub.BloqueHorarioId });
 
-            modelBuilder.Entity<Usuario_Imparte_BloqueHorario>()
-                .HasOne(ub => ub.Usuario)
-                .WithMany(u => u.Usuario_Imparte_BloquesHorario)
-                .HasForeignKey(ub => ub.UsuarioId);
+           // modelBuilder.Entity<Usuario_Imparte_BloqueHorario>()
+             //   .HasOne(ub => ub.Usuario)
+               // .WithMany(u => u.Usuario_Imparte_BloquesHorario)
+                //.HasForeignKey(ub => ub.UsuarioId);
 
             modelBuilder.Entity<Usuario_Imparte_BloqueHorario>()
                 .HasOne(ub => ub.BloqueHorario)
