@@ -14,13 +14,14 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly Context _context;
+        private bool continuar=true;
 
         public UsuariosController(Context context)
         {
             _context = context;
         }
 
-        // GET: api/Usuarios
+        /* GET: api/Usuarios
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
         {
@@ -32,6 +33,29 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
                 .ThenInclude(ub => ub.BloqueHorario)
                 
                 .ToListAsync();
+        }*/
+
+        [HttpGet("ComprobarProfesor")]
+        public async Task<ActionResult<IEnumerable<Alumno>>> ComprobarProfesor(Usuario usuario)
+        {
+            List<Usuario> usuarios = await _context.Usuario.ToListAsync();
+
+            foreach (Usuario aux in usuarios)
+            {
+                if (aux.NombreUsuario == usuario.NombreUsuario)
+                {
+                    this.continuar = false;
+                    break;
+                }
+            }
+
+            return Ok(usuarios);
+        }
+
+        [HttpGet("ListaProfesores")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> listaProfesores()
+        {
+            return await _context.Usuario.ToListAsync();
         }
 
         // GET: api/Usuarios/5
@@ -79,18 +103,25 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return NoContent();
         }
 
+
         // POST: api/Usuarios
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("Registrar")]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+            await this.ComprobarProfesor(usuario);
+            if(this.continuar)
+            {
+                _context.Usuario.Add(usuario);
+                await _context.SaveChangesAsync();
 
-            //encriptar 
-            //usuario.Contrasenha=Encryp.GetSHA256(usuario.Contrasenha);
-            _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync();
+                return CreatedAtAction("GetUsuario", new { id = usuario.Id }, usuario);
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.Id }, usuario);
+            }
+            else
+            {
+                return Ok(false);
+            }
         }
 
         // DELETE: api/Usuarios/5
