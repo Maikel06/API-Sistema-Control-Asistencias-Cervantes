@@ -105,6 +105,19 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
             return NoContent();
         }
+        //buscar alumnos por parte del nombre o cedula
+        [HttpPost("BuscarAlumnos")]
+        public async Task<ActionResult<IEnumerable<Alumno>>> BuscarAlumnos([FromBody] Alumno criteria)
+        {
+            var alumnos = await _context.Alumno.ToListAsync();
+
+            var resultados = alumnos
+                .Where(a => (criteria.Nombre == null || a.Nombre.IndexOf(criteria.Nombre, StringComparison.OrdinalIgnoreCase) >= 0) &&
+                            (criteria.Cedula == null || a.Cedula == null || a.Cedula.IndexOf(criteria.Cedula, StringComparison.OrdinalIgnoreCase) >= 0))
+                .ToList();
+
+            return resultados;
+        }
 
         // POST: api/Alumnos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

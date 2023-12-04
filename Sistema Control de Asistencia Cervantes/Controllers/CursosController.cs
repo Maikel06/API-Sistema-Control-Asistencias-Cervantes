@@ -25,13 +25,13 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
         public async Task<ActionResult<IEnumerable<Curso>>> GetCurso()
         {
             return await _context.Curso
-                .Include(c=>c.Usuario_Imparte_Cursos)
-                .ThenInclude(uc=>uc.Usuario)
+                //.Include(c=>c.Usuario_Imparte_Cursos)
+                //.ThenInclude(uc=>uc.Usuario)
 
-                .Include(c=>c.BloquesHorario)
+                //.Include(c=>c.BloquesHorario)
 
-                .Include(c => c.Alumno_Inscribe_Cursos)
-                .ThenInclude(ac => ac.Alumno)
+                //.Include(c => c.Alumno_Inscribe_Cursos)
+                //.ThenInclude(ac => ac.Alumno)
 
                 .ToListAsync();
         }
@@ -83,7 +83,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
         // POST: api/Cursos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("Registrar")]
         public async Task<ActionResult<Curso>> PostCurso(Curso curso)
         {
             _context.Curso.Add(curso);
@@ -91,6 +91,13 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
             return CreatedAtAction("GetCurso", new { id = curso.Id }, curso);
         }
+
+        [HttpGet("ListaCursos")]
+        public async Task<ActionResult<IEnumerable<Curso>>> listaCursos()
+        {
+            return await _context.Curso.ToListAsync();
+        }
+
 
         // DELETE: api/Cursos/5
         [HttpDelete("{id}")]
