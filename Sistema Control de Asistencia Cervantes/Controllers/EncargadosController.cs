@@ -14,10 +14,45 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
     public class EncargadosController : ControllerBase
     {
         private readonly Context _context;
+        private bool continuar = true;
 
         public EncargadosController(Context context)
         {
             _context = context;
+        }
+
+        [HttpGet("ComprobarEncargado")]
+        public async Task<ActionResult<IEnumerable<Alumno>>> ComprobarEncargado(Encargado encargado)
+        {
+            List<Encargado> alumnos = await _context.Encargado.ToListAsync();
+
+            foreach (Encargado aux in alumnos)
+            {
+                if (aux.Cedula == encargado.Cedula)
+                {
+                    this.continuar = false;
+                    break;
+                }
+            }
+
+            return Ok(alumnos);
+        }
+
+        [HttpPost("Registrar")]
+        public async Task<ActionResult<Encargado>> PostEncargado(Encargado encargado)
+        {
+            await this.ComprobarEncargado(encargado);
+            if (this.continuar)
+            {
+                _context.Encargado.Add(encargado);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetEncargado", new { id = encargado.Id }, encargado);
+            }
+            else
+            {
+                return Ok(false);
+            }
         }
 
         // GET: api/Encargados
@@ -77,14 +112,14 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
         // POST: api/Encargados
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Encargado>> PostEncargado(Encargado encargado)
-        {
-            _context.Encargado.Add(encargado);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<Encargado>> PostEncargado(Encargado encargado)
+        //{
+        //    _context.Encargado.Add(encargado);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEncargado", new { id = encargado.Id }, encargado);
-        }
+        //    return CreatedAtAction("GetEncargado", new { id = encargado.Id }, encargado);
+        //}
 
         // DELETE: api/Encargados/5
         [HttpDelete("{id}")]
