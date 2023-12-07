@@ -55,6 +55,12 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             }
         }
 
+        [HttpGet("ListaEncargados")]
+        public async Task<ActionResult<IEnumerable<Encargado>>> listaEncargados()
+        {
+            return await _context.Encargado.ToListAsync();
+        }
+
         // GET: api/Encargados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Encargado>>> GetEncargado()
