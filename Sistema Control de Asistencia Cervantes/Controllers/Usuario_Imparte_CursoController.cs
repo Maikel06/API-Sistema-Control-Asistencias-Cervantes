@@ -46,6 +46,20 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return usuario_Imparte_Curso;
         }
 
+        [HttpPost("Registrar")]
+        public async Task<ActionResult<Usuario_Imparte_Curso>> PostCurso(Usuario_Imparte_Curso usuario_Imparte_Curso)
+        {
+            _context.Usuario_Imparte_Curso.Add(usuario_Imparte_Curso);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetUsuario_Imparte_Curso", new { id = usuario_Imparte_Curso.CursoId }, usuario_Imparte_Curso);
+        }
+
+        [HttpGet("ListaImparte")]
+        public async Task<ActionResult<IEnumerable<Usuario_Imparte_Curso>>> listaImparte()
+        {
+            return await _context.Usuario_Imparte_Curso.ToListAsync();
+        }
+
         // PUT: api/Usuario_Imparte_Curso/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -77,6 +91,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return NoContent();
         }
 
+
         // POST: api/Usuario_Imparte_Curso
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -102,11 +117,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return CreatedAtAction("GetUsuario_Imparte_Curso", new { id = usuario_Imparte_Curso.UsuarioId }, usuario_Imparte_Curso);
         }
 
-        // DELETE: api/Usuario_Imparte_Curso/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario_Imparte_Curso(int id)
+        [HttpDelete("{usuarioId}/{cursoId}")]
+        public async Task<IActionResult> DeleteEncargado_Cargo_Alumno(int usuarioId, int cursoId)
         {
-            var usuario_Imparte_Curso = await _context.Usuario_Imparte_Curso.FindAsync(id);
+            var usuario_Imparte_Curso = await _context.Usuario_Imparte_Curso.FindAsync(usuarioId, cursoId);
             if (usuario_Imparte_Curso == null)
             {
                 return NotFound();

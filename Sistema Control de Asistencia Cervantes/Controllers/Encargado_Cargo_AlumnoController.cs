@@ -58,47 +58,6 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return await _context.Encargado_Cargo_Alumno.ToListAsync();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEncargado_Cargo_Alumno(int id, Encargado_Cargo_Alumno encargado_Cargo_Alumno)
-        {
-            if (id != encargado_Cargo_Alumno.AlumnoId)
-            {
-                return BadRequest("El ID del estudiante proporcionado no coincide con el ID en los datos del encargado.");
-            }
-
-            // Verificar la existencia de la entidad
-            if (!Encargado_Cargo_AlumnoExists(id))
-            {
-                return NotFound("La relación estudiante-encargado no existe.");
-            }
-
-            // Obtener la entidad existente
-            var existingEntity = await _context.Encargado_Cargo_Alumno
-                .FirstOrDefaultAsync(e => e.AlumnoId == id);
-
-            // Actualizar los valores
-            existingEntity.EncargadoId = encargado_Cargo_Alumno.EncargadoId;
-            // También podrías actualizar otros campos si es necesario.
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!Encargado_Cargo_AlumnoExists(id))
-                {
-                    return NotFound("La relación estudiante-encargado no existe.");
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Encargado_Cargo_Alumno
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -123,22 +82,6 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
             return CreatedAtAction("GetEncargado_Cargo_Alumno", new { id = encargado_Cargo_Alumno.EncargadoId }, encargado_Cargo_Alumno);
         }
-
-        // DELETE: api/Encargado_Cargo_Alumno/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteEncargado_Cargo_Alumno(int id)
-        //{
-        //    var encargado_Cargo_Alumno = await _context.Encargado_Cargo_Alumno.FindAsync(id);
-        //    if (encargado_Cargo_Alumno == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Encargado_Cargo_Alumno.Remove(encargado_Cargo_Alumno);
-        //    await _context.SaveChangesAsync();
-
-        //    return NoContent();
-        //}
 
         [HttpDelete("{encargadoId}/{alumnoId}")]
         public async Task<IActionResult> DeleteEncargado_Cargo_Alumno(int encargadoId, int alumnoId)
