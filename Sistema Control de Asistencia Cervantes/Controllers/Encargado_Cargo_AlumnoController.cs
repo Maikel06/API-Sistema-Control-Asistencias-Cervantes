@@ -44,35 +44,18 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return encargado_Cargo_Alumno;
         }
 
-        // PUT: api/Encargado_Cargo_Alumno/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEncargado_Cargo_Alumno(int id, Encargado_Cargo_Alumno encargado_Cargo_Alumno)
+        [HttpPost("Registrar")]
+        public async Task<ActionResult<Encargado_Cargo_Alumno>> PostCurso(Encargado_Cargo_Alumno encargado_Cargo_Alumno)
         {
-            if (id != encargado_Cargo_Alumno.EncargadoId)
-            {
-                return BadRequest();
-            }
+            _context.Encargado_Cargo_Alumno.Add(encargado_Cargo_Alumno);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetEncargado_Cargo_Alumno", new { id = encargado_Cargo_Alumno.AlumnoId }, encargado_Cargo_Alumno);
+        }
 
-            _context.Entry(encargado_Cargo_Alumno).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!Encargado_Cargo_AlumnoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+        [HttpGet("ListaCargos")]
+        public async Task<ActionResult<IEnumerable<Encargado_Cargo_Alumno>>> listaCargos()
+        {
+            return await _context.Encargado_Cargo_Alumno.ToListAsync();
         }
 
         // POST: api/Encargado_Cargo_Alumno
@@ -100,11 +83,10 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return CreatedAtAction("GetEncargado_Cargo_Alumno", new { id = encargado_Cargo_Alumno.EncargadoId }, encargado_Cargo_Alumno);
         }
 
-        // DELETE: api/Encargado_Cargo_Alumno/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEncargado_Cargo_Alumno(int id)
+        [HttpDelete("{encargadoId}/{alumnoId}")]
+        public async Task<IActionResult> DeleteEncargado_Cargo_Alumno(int encargadoId, int alumnoId)
         {
-            var encargado_Cargo_Alumno = await _context.Encargado_Cargo_Alumno.FindAsync(id);
+            var encargado_Cargo_Alumno = await _context.Encargado_Cargo_Alumno.FindAsync(encargadoId,alumnoId);
             if (encargado_Cargo_Alumno == null)
             {
                 return NotFound();
@@ -118,7 +100,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
         private bool Encargado_Cargo_AlumnoExists(int id)
         {
-            return _context.Encargado_Cargo_Alumno.Any(e => e.EncargadoId == id);
+            return _context.Encargado_Cargo_Alumno.Any(e => e.AlumnoId == id);
         }
     }
 }
