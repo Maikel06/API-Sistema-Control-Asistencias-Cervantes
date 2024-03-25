@@ -364,6 +364,55 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.GradoAcademico", entity =>
+            {
+                entity.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
+
+                entity.Property<string>("Nombre")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                entity.HasKey("Id");
+
+                entity.ToTable("Grado");
+
+                entity.HasMany("Sistema_Control_de_Asistencia_Cervantes.Dominio.Seccion", "Secciones")
+                .WithOne("GradoAcademico")
+                .HasForeignKey("GradoAcademicoId")
+                 .IsRequired();
+
+                entity.Navigation("Secciones");
+
+            });
+
+            modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Seccion", entity =>
+            {
+                entity.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("integer");
+
+                entity.Property<string>("Nombre")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                entity.Property<int>("GradoAcademicoId")
+                    .HasColumnType("integer");
+
+                entity.HasKey("Id");
+
+                entity.ToTable("Seccion");
+
+                entity.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Grado", "GradoAcademico")
+                .WithMany("Secciones")
+                .HasForeignKey("GradoAcademicoId")
+                .IsRequired();
+
+                entity.Navigation("GradoAcademico");
+
+            });
+
             modelBuilder.Entity("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", b =>
                 {
                     b.Navigation("Alumno_Asiste_BloqueHorarios");

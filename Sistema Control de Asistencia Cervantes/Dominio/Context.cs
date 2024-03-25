@@ -32,6 +32,9 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
 
         public DbSet<Encargado_Cargo_Alumno> Encargado_Cargo_Alumno { get; set; }
 
+        public DbSet<GradoAcademico> GradoAcademico { get; set; }
+
+        public DbSet<Seccion> Seccion { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -114,6 +117,11 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             //    .WithMany(a => a.Encargado_Cargo_Alumnos)
             //    .HasForeignKey(ea => ea.AlumnoId);
 
+
+            modelBuilder.Entity<GradoAcademico>()
+            .HasMany(g => g.Secciones)
+            .WithOne(s => s.GradoAcademico)
+            .HasForeignKey(s => s.GradoAcademicoId);
 
         }
 
