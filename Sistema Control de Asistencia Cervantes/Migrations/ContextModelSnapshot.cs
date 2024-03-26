@@ -42,6 +42,16 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("SeccionId") // Agregar la propiedad para la clave foránea
+                    .HasColumnType("integer");
+
+                    b.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Seccion", "Seccion")
+                    .WithMany("Alumnos")
+                    .HasForeignKey("SeccionId")
+                    .IsRequired();
+
+                    b.Navigation("Seccion");
+
                     b.HasKey("Id");
 
                     b.ToTable("Alumno");
@@ -404,10 +414,17 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
 
                 entity.ToTable("Seccion");
 
-                entity.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.Grado", "GradoAcademico")
+                entity.HasOne("Sistema_Control_de_Asistencia_Cervantes.Dominio.GradoAcademico", "GradoAcademico")
                 .WithMany("Secciones")
                 .HasForeignKey("GradoAcademicoId")
                 .IsRequired();
+
+                entity.HasMany("Sistema_Control_de_Asistencia_Cervantes.Dominio.Alumno", "Alumnos")
+                .WithOne("Seccion")
+                .HasForeignKey("SeccionId")
+                 .IsRequired();
+
+                entity.Navigation("Alumnos");
 
                 entity.Navigation("GradoAcademico");
 

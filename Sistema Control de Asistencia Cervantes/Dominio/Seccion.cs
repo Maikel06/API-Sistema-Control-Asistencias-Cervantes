@@ -8,5 +8,7 @@
         public int GradoAcademicoId { get; set; }
 
         public virtual GradoAcademico? GradoAcademico { get; set; } = null!;
+
+        public ICollection<Alumno> Alumnos { get; set; } = new HashSet<Alumno>();
     }
 }

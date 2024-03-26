@@ -11,7 +11,9 @@
         public String Nombre { get; set; } = null!;
         public String Apellidos { get; set; } = null!;
 
+        public int SeccionId { get; set; }
 
+        public virtual Seccion? Seccion { get; set; } = null!;
 
 
 

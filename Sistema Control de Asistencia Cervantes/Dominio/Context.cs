@@ -123,6 +123,13 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Dominio
             .WithOne(s => s.GradoAcademico)
             .HasForeignKey(s => s.GradoAcademicoId);
 
+            modelBuilder.Entity<Seccion>()
+            .HasMany(g => g.Alumnos)
+            .WithOne(s => s.Seccion)
+            .HasForeignKey(s => s.SeccionId);
+
+
+
         }
 
     }

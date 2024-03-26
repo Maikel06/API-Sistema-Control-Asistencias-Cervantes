@@ -1,6 +1,8 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Sistema_Control_de_Asistencia_Cervantes.Dominio;
 
 #nullable disable
 
@@ -13,6 +15,38 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "GradoAcademico",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                  .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: false)
+                },
+                 constraints: table =>
+                 {
+                     table.PrimaryKey("PK_GradoAcademico", x => x.Id);
+                 });
+
+            migrationBuilder.CreateTable(
+                         name: "Seccion",
+                        columns: table => new
+                        {
+                            Id = table.Column<int>(type: "integer", nullable: false)
+                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                            Nombre = table.Column<string>(type: "text", nullable: false),
+                            GradoAcademicoId = table.Column<int>(type: "integer", nullable: false)
+                        },
+                     constraints: table =>
+                     {
+                         table.PrimaryKey("PK_Seccion", x => x.Id);
+                         table.ForeignKey(
+                             name: "FK_Seccion_GradoAcademico_GradoAcademicoId",
+                             column: x => x.GradoAcademicoId,
+                             principalTable: "GradoAcademico",
+                             principalColumn: "Id",
+                             onDelete: ReferentialAction.Cascade);
+                     });
+            migrationBuilder.CreateTable(
                 name: "Alumno",
                 columns: table => new
                 {
@@ -20,12 +54,20 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Cedula = table.Column<string>(type: "text", nullable: false),
                     Nombre = table.Column<string>(type: "text", nullable: false),
-                    Apellidos = table.Column<string>(type: "text", nullable: false)
+                    Apellidos = table.Column<string>(type: "text", nullable: false),
+                    SeccionId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alumno", x => x.Id);
+                    table.PrimaryKey("PK_Alumno", x => x.Id); 
+                    table.ForeignKey(
+                    name: "FK_Alumno_Seccion_SeccionId", // Nombre de la clave foránea
+                    column: x => x.SeccionId,
+                    principalTable: "Seccion", // Nombre de la tabla de destino
+                    principalColumn: "Id", // Nombre de la columna de la tabla de destino
+                    onDelete: ReferentialAction.Cascade); // Acción en cascada en caso de eliminación de la entidad relacionada
                 });
+
 
             migrationBuilder.CreateTable(
                 name: "Curso",
@@ -224,38 +266,7 @@ namespace SistemaControldeAsistenciaCervantes.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                 name: "GradoAcademico",
-                 columns: table => new
-                  {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                   .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false)
-                  },
-                  constraints: table =>
-                    {
-                     table.PrimaryKey("PK_GradoAcademico", x => x.Id);
-                    });
-
-            migrationBuilder.CreateTable(
-                         name: "Seccion",
-                        columns: table => new
-                            {
-                         Id = table.Column<int>(type: "integer", nullable: false)
-                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                         Nombre = table.Column<string>(type: "text", nullable: false),
-                            GradoAcademicoId = table.Column<int>(type: "integer", nullable: false)
-                    },
-                     constraints: table =>
-                    {
-                     table.PrimaryKey("PK_Seccion", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Seccion_GradoAcademico_GradoAcademicoId",
-                        column: x => x.GradoAcademicoId,
-                        principalTable: "GradoAcademico",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+           
 
             migrationBuilder.CreateIndex(
                 name: "IX_Alumno_Asiste_BloquesHorario_BloqueHorarioId",

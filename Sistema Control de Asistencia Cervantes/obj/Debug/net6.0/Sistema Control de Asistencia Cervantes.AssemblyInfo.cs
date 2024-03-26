@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sistema Control de Asistencia Cervantes")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5ede9fa5d7e1244af18880c2665f65c6cfe1137")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20f20a958591a9c9a21308320c968d58740f5eaa")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sistema Control de Asistencia Cervantes")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sistema Control de Asistencia Cervantes")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
