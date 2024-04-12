@@ -11,6 +11,7 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
     public class SeccionController : ControllerBase
     {
         private readonly Context _context;
+        private bool continuar = true;
 
         public SeccionController(Context context)
         {
@@ -26,6 +27,22 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
 
         }
 
+        [HttpGet("SeccionesByGrado/{id}")]
+        public async Task<ActionResult<IEnumerable<Seccion>>> GetSeccionByGrado(int id)
+        {
+            List<Seccion> secciones = await _context.Seccion.ToListAsync();
+            List<Seccion> seccionesConGrado = new List<Seccion>();
+
+            foreach (Seccion aux in secciones)
+            {
+                if (aux.GradoAcademicoId == id)
+                {
+                    seccionesConGrado.Add(aux);
+                }
+            }
+
+            return Ok(seccionesConGrado);
+        }
 
         // GET: api/Seccion/5
         [HttpGet("{id}")]
