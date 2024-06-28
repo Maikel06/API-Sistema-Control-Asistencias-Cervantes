@@ -75,6 +75,24 @@ namespace Sistema_Control_de_Asistencia_Cervantes.Controllers
             return alumno;
         }
 
+
+        [HttpGet("AlumnosBySeccion/{id}")]
+        public async Task<ActionResult<IEnumerable<Alumno>>> GetAlumnosBySeccion(int id)
+        {
+            List<Alumno> estudiantes = await _context.Alumno.ToListAsync();
+            List<Alumno> estudiantesConSeccion = new List<Alumno>();
+
+            foreach (Alumno aux in estudiantes)
+            {
+                if (aux.SeccionId == id)
+                {
+                    estudiantesConSeccion.Add(aux);
+                }
+            }
+
+            return Ok(estudiantesConSeccion);
+        }
+
         // PUT: api/Alumnos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
